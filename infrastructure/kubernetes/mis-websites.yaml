@@ -22,7 +22,7 @@ data:
       <main>
         <h1>This website is hosted by using Kubernetes.</h1>
         <p>Instance: <strong>S1_Master</strong></p>
-        <p>Full Name: <strong>YOUR FULL NAME</strong></p>
+        <p>Full Name: <strong>Linda HEM</strong></p>
       </main>
     </body>
     </html>
@@ -96,7 +96,7 @@ data:
       <main>
         <h1>This website is hosted by using Kubernetes.</h1>
         <p>Instance: <strong>S2_Worker1</strong></p>
-        <p>Full Name: <strong>YOUR FULL NAME</strong></p>
+        <p>Full Name: <strong>Linda HEM</strong></p>
       </main>
     </body>
     </html>
@@ -170,7 +170,7 @@ data:
       <main>
         <h1>This website is hosted by using Kubernetes.</h1>
         <p>Instance: <strong>S2_Worker2</strong></p>
-        <p>Full Name: <strong>YOUR FULL NAME</strong></p>
+        <p>Full Name: <strong>Linda HEM</strong></p>
       </main>
     </body>
     </html>
