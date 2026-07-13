@@ -1,0 +1,221 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: master-site-content
+data:
+  index.html: |
+    <!doctype html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>S1_Master - MIS Midterm</title>
+      <style>
+        body { font-family: Arial, sans-serif; margin: 0; min-height: 100vh; display: grid; place-items: center; background: #eef3ff; color: #172554; }
+        main { width: min(680px, 86vw); padding: 48px; background: white; border-radius: 18px; box-shadow: 0 18px 50px rgba(23, 37, 84, .14); }
+        h1 { margin-top: 0; font-size: 2.2rem; }
+        p { font-size: 1.2rem; line-height: 1.6; }
+        strong { color: #1d4ed8; }
+      </style>
+    </head>
+    <body>
+      <main>
+        <h1>This website is hosted by using Kubernetes.</h1>
+        <p>Instance: <strong>S1_Master</strong></p>
+        <p>Full Name: <strong>YOUR FULL NAME</strong></p>
+      </main>
+    </body>
+    </html>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: master-site
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: master-site
+  template:
+    metadata:
+      labels:
+        app: master-site
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: s1-master
+      containers:
+        - name: nginx
+          image: nginx:stable-alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: site-content
+              mountPath: /usr/share/nginx/html/index.html
+              subPath: index.html
+              readOnly: true
+      volumes:
+        - name: site-content
+          configMap:
+            name: master-site-content
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: master-site
+spec:
+  type: NodePort
+  selector:
+    app: master-site
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      nodePort: 30081
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: worker1-site-content
+data:
+  index.html: |
+    <!doctype html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>S2_Worker1 - MIS Midterm</title>
+      <style>
+        body { font-family: Arial, sans-serif; margin: 0; min-height: 100vh; display: grid; place-items: center; background: #ecfdf5; color: #064e3b; }
+        main { width: min(680px, 86vw); padding: 48px; background: white; border-radius: 18px; box-shadow: 0 18px 50px rgba(6, 78, 59, .14); }
+        h1 { margin-top: 0; font-size: 2.2rem; }
+        p { font-size: 1.2rem; line-height: 1.6; }
+        strong { color: #047857; }
+      </style>
+    </head>
+    <body>
+      <main>
+        <h1>This website is hosted by using Kubernetes.</h1>
+        <p>Instance: <strong>S2_Worker1</strong></p>
+        <p>Full Name: <strong>YOUR FULL NAME</strong></p>
+      </main>
+    </body>
+    </html>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker1-site
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worker1-site
+  template:
+    metadata:
+      labels:
+        app: worker1-site
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: s2-worker1
+      containers:
+        - name: nginx
+          image: nginx:stable-alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: site-content
+              mountPath: /usr/share/nginx/html/index.html
+              subPath: index.html
+              readOnly: true
+      volumes:
+        - name: site-content
+          configMap:
+            name: worker1-site-content
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: worker1-site
+spec:
+  type: NodePort
+  selector:
+    app: worker1-site
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      nodePort: 30082
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: worker2-site-content
+data:
+  index.html: |
+    <!doctype html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>S2_Worker2 - MIS Midterm</title>
+      <style>
+        body { font-family: Arial, sans-serif; margin: 0; min-height: 100vh; display: grid; place-items: center; background: #fff7ed; color: #7c2d12; }
+        main { width: min(680px, 86vw); padding: 48px; background: white; border-radius: 18px; box-shadow: 0 18px 50px rgba(124, 45, 18, .14); }
+        h1 { margin-top: 0; font-size: 2.2rem; }
+        p { font-size: 1.2rem; line-height: 1.6; }
+        strong { color: #c2410c; }
+      </style>
+    </head>
+    <body>
+      <main>
+        <h1>This website is hosted by using Kubernetes.</h1>
+        <p>Instance: <strong>S2_Worker2</strong></p>
+        <p>Full Name: <strong>YOUR FULL NAME</strong></p>
+      </main>
+    </body>
+    </html>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker2-site
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worker2-site
+  template:
+    metadata:
+      labels:
+        app: worker2-site
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: s2-worker2
+      containers:
+        - name: nginx
+          image: nginx:stable-alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: site-content
+              mountPath: /usr/share/nginx/html/index.html
+              subPath: index.html
+              readOnly: true
+      volumes:
+        - name: site-content
+          configMap:
+            name: worker2-site-content
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: worker2-site
+spec:
+  type: NodePort
+  selector:
+    app: worker2-site
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      nodePort: 30083

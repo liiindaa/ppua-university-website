@@ -1,0 +1,6 @@
+.claude/
+tmp/
+infrastructure/kubernetes/demo-sites/
+*.log
+.DS_Store
+Thumbs.db
